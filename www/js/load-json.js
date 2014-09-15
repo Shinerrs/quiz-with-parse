@@ -12,11 +12,19 @@ function getList(cb) {
 
 function getItem(id, cb) {
 	var NewsItem = Parse.Object.extend("NewsItem");
+	var Questions = Parse.Object.extend("Questions");
 	var query = new Parse.Query(NewsItem);
-	query.equalTo("objectId", id);
-	query.find({success: function(item) {
-		
-		cb(item[0]);
+	query.equalTo('objectId', id);
+	query.find({success: function(newsItemArr) {
+		var newsItem = newsItemArr[0];
+		var title = newsItem.get('title');
+		var childQuery = new Parse.Query(Questions);
+		childQuery.equalTo("p", newsItem);
+		childQuery.find({
+			success: function(list) {
+				cb(title, list);
+			}
+		});
 	}});
 }
 
@@ -25,25 +33,29 @@ $(document).ready(function(){
 		var output = $('#list');
 		getList(function(data) {
 			var dd = [];
-			$.each(data, function(i, v) {			
+			$.each(data, function(i, v) {
 				dd.push({id: v.id, title: v.get('title')});
 
 			});
 			//console.log(dd);
 			var rendered = Mustache.render($('#home-tmpl').html(), {list: dd});
-			$('#mainbody').html(rendered);	
+			$('#mainbody').html(rendered);
 			//console.log(rendered);
-		
+
 		});
 	//});
-	$('.newsitem').live('click',function() {
+	$('.newsitem').live('click', function() {
 		var id = $(this).data('id');
-		
-		getItem(id, function(d) {
-			var title = Mustache.render($('#titlebar-tmpl').html(), {title: d.get('title')});
+
+		getItem(id, function(title, list) {
+			var len = list.length;
+			var title = Mustache.render($('#titlebar-tmpl').html(), {title: len + ' Questions for '+title});
 			$('#titlebar').html(title);
-			//console.log(d.get('title'));console.log(d.createdAt);			
-			var content = Mustache.render($('#item-tmpl').html(), {desc: d.get('desc'), createdAt: d.createdAt});
+			//console.log(list);
+			$.each(list, function(i, v) {
+				v.title = v.get('title');
+			});
+			var content = Mustache.render($('#question-list-tmpl').html(), {list: list});
 			$('#mainbody').html(content);
 
 			//console.log(title + " " + content);
