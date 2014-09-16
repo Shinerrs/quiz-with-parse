@@ -49,7 +49,7 @@ $(document).ready(function(){
 
 		getItem(id, function(title, list) {
 			var len = list.length;
-			var title = Mustache.render($('#titlebar-tmpl').html(), {title: len + ' Questions for '+title});
+			var title = Mustache.render($('#titlebar-tmpl').html(), {title: len + ' Questions for '+title, backtitle: ''});
 			$('#titlebar').html(title);
 			//console.log(list);
 			$.each(list, function(i, v) {

@@ -16,11 +16,13 @@ function onBodyLoad() {
 </script>
 </head>
 <body onload="onBodyLoad()" class="ionic-body">
-	<div class="bar bar-header bar-dark" id="titlebar">
-  		<h1 class="title">Quiz</h1>
+	<div id="titlebar">
+		<div class="bar bar-header bar-dark">
+	    	<a class="button button-clear icon ion-navicon"></a>
+	  		<h1 class="title">Play</h1>  		
+		</div>			
 	</div>
 	<div class="" id="mainbody" style="padding-top: 44px">
-
 	</div>
 </body>
 <script id="home-tmpl" type="x-tmpl-mustache">
@@ -42,6 +44,9 @@ function onBodyLoad() {
 	</div>
 </script>
 <script id="titlebar-tmpl" type="x-tmpl-mustache">
-	<h1 class="title">{{title}}</h1>
+	<div class="bar bar-header bar-dark">
+    	<a class="button icon-left ion-chevron-left button-clear">{{backtitle}}</a>
+  		<h1 class="title">{{title}}</h1>  		
+	</div>	
 </script>
 </html>
