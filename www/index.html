@@ -19,12 +19,18 @@ function onBodyLoad() {
 	<div id="titlebar">
 		<div class="bar bar-header bar-dark">
 	    	<a class="button button-clear icon ion-navicon"></a>
-	  		<h1 class="title">Play</h1>  		
-		</div>			
+	  		<h1 class="title">Play</h1>
+		</div>
 	</div>
 	<div class="" id="mainbody" style="padding-top: 44px">
 	</div>
 </body>
+<script id="titlebar-tmpl" type="x-tmpl-mustache">
+	<div class="bar bar-header bar-dark">
+    	<a class="button icon-left ion-chevron-left button-clear">{{backtitle}}</a>
+  		<h1 class="title">{{title}}</h1>
+	</div>
+</script>
 <script id="home-tmpl" type="x-tmpl-mustache">
 	<div id="main" class="content">
 		<ul id='list' class='list'>
@@ -43,10 +49,24 @@ function onBodyLoad() {
 		</ul>
 	</div>
 </script>
-<script id="titlebar-tmpl" type="x-tmpl-mustache">
-	<div class="bar bar-header bar-dark">
-    	<a class="button icon-left ion-chevron-left button-clear">{{backtitle}}</a>
-  		<h1 class="title">{{title}}</h1>  		
-	</div>	
+<script id="question-tmpl" type="x-tmpl-mustache">
+	<div class="content">
+		<h3>{{title}}</h3>
+		<div id='olist' class='list'>
+		{{#list}}
+	        <label class="item item-radio">
+				<input type="radio" name="group" data-id="{{id}}">
+			    <div class="item-content">
+			    	{{.}}
+			    </div>
+			    <i class="radio-icon ion-checkmark"></i>
+  			</label>
+		{{/list}}
+		</div>
+		<button class="button button-clear button-positive">
+		    Next
+		</button>
+	</div>
 </script>
+
 </html>

@@ -1,6 +1,5 @@
 Parse.initialize("h9Klv5bd9JJUz2Go267205fq5mbTU4sxz5mCd7MZ", "2IEA1cZbM6nJgRDJ5JVcWTHq6dGQFQp6Mid9vK5e");
 
-
 function getList(cb) {
 	var NewsItem = Parse.Object.extend("NewsItem");
 	var query = new Parse.Query(NewsItem);
@@ -52,10 +51,14 @@ $(document).ready(function(){
 			var title = Mustache.render($('#titlebar-tmpl').html(), {title: len + ' Questions for '+title, backtitle: ''});
 			$('#titlebar').html(title);
 			//console.log(list);
+
+			var content = '';
 			$.each(list, function(i, v) {
-				v.title = v.get('title');
+				var optns = [v.get('option1'), v.get('option2'),v.get('option3'),v.get('option4')];
+console.log(optns);
+			    content += Mustache.render($('#question-tmpl').html(), {title: v.get('title'), list: optns});
 			});
-			var content = Mustache.render($('#question-list-tmpl').html(), {list: list});
+
 			$('#mainbody').html(content);
 
 			//console.log(title + " " + content);
