@@ -55,7 +55,7 @@ $(document).ready(function(){
 			var content = '';
 			$.each(list, function(i, v) {
 				var optns = [v.get('option1'), v.get('option2'),v.get('option3'),v.get('option4')];
-console.log(optns);
+				console.log(optns);
 			    content += Mustache.render($('#question-tmpl').html(), {title: v.get('title'), list: optns});
 			});
 
