@@ -4,8 +4,9 @@ var userId = LocalStorageStore.getUserId();
 function getNextQuestion(callback) {
 	Parse.Cloud.run('nextRandomQuestion', {localuserid: userId}, {
 	  success: function(resp) {
+	     console.log(resp);
 	     resp && callback(resp.result);
-		 console.log(resp);
+
 	  },
 	  error: function(error) {
 		//console.log(error);
