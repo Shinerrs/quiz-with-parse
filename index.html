@@ -53,19 +53,19 @@ function onBodyLoad() {
 </script>
 <script id="question-tmpl" type="x-tmpl-mustache">
 	<div class="content">
-		<h3>{{title}}</h3>
-		<div id='olist' class='list'>
+		<h3 class="padding">{{title}}</h3>
+		<div id='olist' class='list list-inset'>
 		{{#list}}
 	        <label class="item item-radio">
 				<input type="radio" name="group" data-id="{{id}}">
 			    <div class="item-content">
-			    	{{.}}
+			    	{{title}}
 			    </div>
 			    <i class="radio-icon ion-checkmark"></i>
   			</label>
 		{{/list}}
 		</div>
-		<button class="button button-clear button-positive">
+		<button id="submitAnswer" data-codenext="{{answer}}" class="button button-clear button-positive padding-horizontal button-full ">
 		    Next
 		</button>
 	</div>

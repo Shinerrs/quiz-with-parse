@@ -4,8 +4,8 @@ var userId = LocalStorageStore.getUserId();
 function getNextQuestion(callback) {
 	Parse.Cloud.run('nextRandomQuestion', {localuserid: userId}, {
 	  success: function(resp) {
-	     console.log(resp);
-	     resp && callback(resp.result);
+	     //console.log(resp._serverData);
+	     callback(resp._serverData);
 
 	  },
 	  error: function(error) {
@@ -19,9 +19,20 @@ $(document).ready(function(){
 
 	//});
 	getNextQuestion(function(r) {
+		var tmpl = $('#question-tmpl').html();
+		var obj = {
+			title: r.title,
+			answer: r.answer,
+			list: [{id: 1, title: r.option1}, {id: 2, title: r.option2}, {id: 3, title: r.option3}, {id: 4, title: r.option4}]
+		};
 
-		$('#mainbody').html(r.title);
+		$('#mainbody').html(Mustache.render(tmpl, obj));
 	});
 
+	$('#submitAnswer').live('click', function() {
+		var ans = $('#submitAnswer').data('codenext');
+		console.log("Answer: " + ans);
+		console.log("Clicked: " + $('input[name=group]:checked').data('id'));
+	});
 
 });

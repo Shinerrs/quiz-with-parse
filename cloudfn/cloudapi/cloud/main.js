@@ -31,7 +31,7 @@ Parse.Cloud.define("nextRandomQuestion", function(request, response) {
 	quesQuery.limit(1);
 	quesQuery.first({
 	  success: function(object) {
-		console.log(object);
+		//console.log(object);
 		response.success(object);
 	  },
 	  error: function(error) {
