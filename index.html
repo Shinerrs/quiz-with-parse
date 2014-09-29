@@ -19,18 +19,24 @@ function onBodyLoad() {
 </head>
 <body onload="onBodyLoad()" class="ionic-body">
 	<div id="titlebar">
-		<div class="bar bar-header bar-dark">
-	    	<a class="button button-clear icon ion-navicon"></a>
+		<div class="bar bar-header bar-light">
 	  		<h1 class="title">Play</h1>
+	  		<a class="button button-clear icon ion-person pull-right" id="profileLink"></a>
 		</div>
 	</div>
 	<div class="" id="mainbody" style="padding-top: 44px">
 	</div>
 </body>
-<script id="titlebar-tmpl" type="x-tmpl-mustache">
-	<div class="bar bar-header bar-dark">
-    	<a class="button icon-left ion-chevron-left button-clear">{{backtitle}}</a>
+<script id="profile-titlebar-tmpl" type="x-tmpl-mustache">
+	<div class="bar bar-header bar-light">
   		<h1 class="title">{{title}}</h1>
+  		<a class="pull-right button button-clear" id="playLink" href="#"><span class="icon ion-ios7-football-outline"></span> </a>
+	</div>
+</script>
+<script id="gen-titlebar-tmpl" type="x-tmpl-mustache">
+	<div class="bar bar-header bar-light">
+  		<h1 class="title">{{title}}</h1>
+  		<a class="button button-clear icon ion-person pull-right" id="profileLink"></a>
 	</div>
 </script>
 <script id="home-tmpl" type="x-tmpl-mustache">
@@ -68,6 +74,37 @@ function onBodyLoad() {
 		<button id="submitAnswer" class="button button-clear button-positive padding-horizontal button-full ">
 		    Next
 		</button>
+	</div>
+</script>
+<script id="profile-tmpl" type="x-tmpl-mustache">
+	<div class="list">
+	  <div class="item item-divider">
+		Activity
+	  </div>
+	  <a class="item item-icon-left" href="#" id="user-right-score">
+		<i class="icon ion-ios7-checkmark-outline"></i>
+		Right Answers
+		<span class="badge badge-balanced">{{right}}</span>
+	  </a>
+
+	  <a class="item item-icon-left" href="#" id="user-wrong-score">
+		<i class="icon ion-ios7-close-outline"></i>
+		Wrong Answers
+		<span class="badge badge-assertive">{{wrong}}</span>
+	  </a>
+
+	  <a class="item item-icon-left" href="#" id="user-perc-score">
+		<i class="icon ion-ios7-speedometer-outline"></i>
+		Score
+		<span class="badge badge-stable">{{perc}} %</span>
+	  </a>
+	</div>
+</script>
+<script id="error-tmpl" type="x-tmpl-mustache">
+	<div class="card">
+	  <div class="item item-text-wrap assertive">
+		{{msg}}
+	  </div>
 	</div>
 </script>
 
