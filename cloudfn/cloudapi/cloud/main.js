@@ -3,62 +3,31 @@ function randomBetween(min, max) {
 }
 //get req param using request.params.xxx
 
-Parse.Cloud.define("nextRandomQuestion", function(request, response) {
+Parse.Cloud.define("fetchUserActivity", function(request, response) {
   var query = new Parse.Query("UserActivity");
   query.equalTo("userId", request.params.localuserid);
   query.find({
     success: function(results) {
-    	getQuestion(results);
-    	//console.log(results);
-    	if (results.length == 0) {
-    		//createUserActivity(getQuestion);
-    	} else {
-    		//getQuestion(results);
-    	}
+    	response.success(results);
     },
     error: function(error) {
-		console.log("0Error: " + error.code + " " + error.message);
+		console.log("Error: " + error.code + " " + error.message);
     }
   });
+});
 
-  function getQuestion(userActivities) {
-	var doneQuesIds = [];
-	if (userActivities && userActivities.length > 0) {
-		for (var i=0; i<userActivities.length; i++) {
-			doneQuesIds.push(userActivities[i].get('questionId'));
-		}
-	}
-
-	//console.log(doneQuesIds);
-
+Parse.Cloud.define("fetchQuestionSet", function(request, response) {
 	var quesQuery = new Parse.Query("IndiaQuiz");
-	doneQuesIds.length > 0 && quesQuery.notContainedIn('objectId', doneQuesIds);
-	quesQuery.limit(1);
-	quesQuery.first({
+	quesQuery.limit(10);
+	quesQuery.find({
 	  success: function(object) {
 		//console.log(object);
 		response.success(object);
 	  },
 	  error: function(error) {
-		console.log("2Error: " + error.code + " " + error.message);
+		console.log("Error: " + error.code + " " + error.message);
 	  }
 	});
-
-  }
-  function createUserActivity(callback) {
-	var UserActivity = Parse.Object.extend("UserActivity");
-	var userActivity = new UserActivity();
-
-	userActivity.set("userId", request.params.localuserid);
-	userActivity.save(null, {
-	  success: function(suc) {
-		callback(null);
-	  },
-	  error: function(error) {
-		console.log("1Error: " + error.code + " " + error.message);
-	  }
-	});
-  }
 });
 
 Parse.Cloud.define("checkAnswer", function(request, response) {
@@ -89,7 +58,7 @@ Parse.Cloud.define("updateUserActivity", function(request, response) {
 	  	response.success("success");
 	  },
 	  error: function(obj, error) {
-	  	console.log(error);
+	  	//console.log(error);
 	  	response.error(error.code);
 	  }
 	});
@@ -97,7 +66,7 @@ Parse.Cloud.define("updateUserActivity", function(request, response) {
 });
 
 
-Parse.Cloud.define("fetchUserActivity", function(request, response) {
+Parse.Cloud.define("fetchUserProfile", function(request, response) {
 	var query = new Parse.Query("UserActivity");
 	  query.equalTo("userId", request.params.localuserid);
 	  query.find({

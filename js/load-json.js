@@ -1,20 +1,27 @@
 Parse.initialize("h9Klv5bd9JJUz2Go267205fq5mbTU4sxz5mCd7MZ", "2IEA1cZbM6nJgRDJ5JVcWTHq6dGQFQp6Mid9vK5e");
 var userId = LocalStorageStore.getUserId();
-
-function getNextQuestion(callback) {
-	Parse.Cloud.run('nextRandomQuestion', {localuserid: userId}, {
-	  success: function(resp) {
-	  	 if (resp) {
-			 //console.log($.extend({objectId: resp.id}, resp.attributes));
-			 callback($.extend({objectId: resp.id}, resp.attributes));
-	  	 } else {
-			 $('#mainbody').html(Mustache.render($('#error-tmpl').html(), {msg: 'No quiz available. Please come back later.'}));
-	  	 }
-	  },
-	  error: function(error) {
-		//console.log(error);
-	  }
-	});
+var questionCache = [];
+function fetchNextQuestion(callback) {
+	if (questionCache.length == 0) {
+		Parse.Cloud.run('fetchQuestionSet', {}, {
+		  success: function(resp) {
+			 if (resp) {
+				for (var i=0; i<resp.length; i++) {
+					var o = resp[i];
+					questionCache.push($.extend({objectId: o.id}, o.attributes));
+				}
+				callback();
+			 } else {
+				 $('#mainbody').html(Mustache.render($('#error-tmpl').html(), {msg: 'No quiz available. Please come back later.'}));
+			 }
+		  },
+		  error: function(error) {
+			console.log(error);
+		  }
+		});
+	} else {
+		callback();
+	}
 }
 
 function getAnswer(userId, objectId, callback) {
@@ -48,8 +55,9 @@ $(document).ready(function(){
 
 	//});
 	function nextQuestion() {
-		getNextQuestion(function(r) {
+		fetchNextQuestion(function() {
 			var tmpl = $('#question-tmpl').html();
+			var r = questionCache.pop();
 			var obj = {
 				question: {
 					title: r.title,
@@ -92,7 +100,7 @@ $(document).ready(function(){
 	}
 
 	$('#profileLink').live('click', function() {
-		Parse.Cloud.run('fetchUserActivity', {localuserid: userId}, {
+		Parse.Cloud.run('fetchUserProfile', {localuserid: userId}, {
 			success: function(resp) {
 				console.log(resp);
 				resp ? showProfile(resp) : showProfile({});
