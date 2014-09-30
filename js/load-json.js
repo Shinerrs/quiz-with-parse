@@ -4,20 +4,20 @@ var questionCache = [];
 function fetchNextQuestion(callback) {
 	if (questionCache.length == 0) {
 		Parse.Cloud.run('fetchQuestionSet', {localuserid: userId}, {
-		  success: function(resp) {
-			 if (resp) {
-				for (var i=0; i<resp.length; i++) {
-					var o = resp[i];
-					questionCache.push($.extend({objectId: o.id}, o.attributes));
-				}
-				callback();
-			 } else {
-				 $('#mainbody').html(Mustache.render($('#error-tmpl').html(), {msg: 'No quiz available. Please come back later.'}));
-			 }
-		  },
-		  error: function(error) {
-			console.log(error);
-		  }
+		    success: function(resp) {
+				if (resp && resp.length > 0) {
+					for (var i=0; i<resp.length; i++) {
+						var o = resp[i];
+						questionCache.push($.extend({objectId: o.id}, o.attributes));
+					}
+					callback();
+			 	} else {
+				    $('#mainbody').html(Mustache.render($('#error-tmpl').html(), {msg: 'No quiz available. Please come back later.'}));
+			 	}
+		    },
+		    error: function(error) {
+				console.log(error);
+		    }
 		});
 	} else {
 		callback();
