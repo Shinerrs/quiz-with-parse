@@ -3,8 +3,8 @@ function randomBetween(min, max) {
 }
 //get req param using request.params.xxx
 
-Parse.Cloud.define("fetchUserActivity", function(request, response) {
-  var query = new Parse.Query("UserActivity");
+Parse.Cloud.define("fetchUserScore", function(request, response) {
+  var query = new Parse.Query("UserScore");
   query.equalTo("userId", request.params.localuserid);
   query.find({
     success: function(results) {
@@ -16,17 +16,62 @@ Parse.Cloud.define("fetchUserActivity", function(request, response) {
   });
 });
 
+function getUserActivity(userId, callback) {
+	var userActQuery = new Parse.Query("UserActivity");
+	userActQuery.equalTo("userId", userId);
+	userActQuery.first({
+		success: function(object) {
+		    if (object) {
+				callback(object.get('lastRow'));
+		    } else {
+				callback(0);
+		    }
+		},
+		error: function(error) {
+			console.log("Error " + error);
+		}
+	});
+}
+function updateUserActivity(userId, length, callback) {
+	var UserActivity = Parse.Object.extend("UserActivity");
+	var userActQuery = new Parse.Query(UserActivity);
+	userActQuery.equalTo("userId", userId);
+	userActQuery.first({
+		success: function(object) {
+		    if (object) {
+		    	object.set('lastRow', parseInt(object.get('lastRow')) +  length);
+		    	object.save(null, {success: callback});
+		    } else {
+		    	console.log("not found");
+				var v = new UserActivity();
+				v.set('userId', userId);
+				v.set('lastRow', length+'');
+				v.save(null, {success: function(d) { console.log("saved"); callback();} });
+		    }
+		},
+		error: function(error) {
+			console.log("Error " + error);
+		}
+	});
+}
+
+
 Parse.Cloud.define("fetchQuestionSet", function(request, response) {
-	var quesQuery = new Parse.Query("IndiaQuiz");
-	quesQuery.limit(10);
-	quesQuery.find({
-	  success: function(object) {
-		//console.log(object);
-		response.success(object);
-	  },
-	  error: function(error) {
-		console.log("Error: " + error.code + " " + error.message);
-	  }
+	getUserActivity(request.params.localuserid, function(skip) {
+		var quesQuery = new Parse.Query("IndiaQuiz");
+		quesQuery.limit(10);
+		quesQuery.skip(skip);
+		quesQuery.find({
+		  success: function(object) {
+			//console.log(object);
+			updateUserActivity(request.params.localuserid, object.length, function() {
+				response.success(object);
+			});
+		  },
+		  error: function(error) {
+			console.log("Error: " + error.code + " " + error.message);
+		  }
+		});
 	});
 });
 
@@ -45,15 +90,15 @@ Parse.Cloud.define("checkAnswer", function(request, response) {
 	});
 });
 
-Parse.Cloud.define("updateUserActivity", function(request, response) {
-	var UserActivity = Parse.Object.extend("UserActivity");
-	var userActivity = new UserActivity();
+Parse.Cloud.define("updateUserScore", function(request, response) {
+	var UserScore = Parse.Object.extend("UserScore");
+	var userScore = new UserScore();
 
-	userActivity.set("userId", request.params.localuserid);
-	userActivity.set("questionId", request.params.questionId);
-	userActivity.set("score", ''+request.params.score);
+	userScore.set("userId", request.params.localuserid);
+	userScore.set("questionId", request.params.questionId);
+	userScore.set("score", ''+request.params.score);
 
-	userActivity.save(null, {
+	userScore.save(null, {
 	  success: function(newobj) {
 	  	response.success("success");
 	  },
@@ -67,7 +112,7 @@ Parse.Cloud.define("updateUserActivity", function(request, response) {
 
 
 Parse.Cloud.define("fetchUserProfile", function(request, response) {
-	var query = new Parse.Query("UserActivity");
+	var query = new Parse.Query("UserScore");
 	  query.equalTo("userId", request.params.localuserid);
 	  query.find({
 	    success: function(results) {

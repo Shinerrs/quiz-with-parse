@@ -3,7 +3,7 @@ var userId = LocalStorageStore.getUserId();
 var questionCache = [];
 function fetchNextQuestion(callback) {
 	if (questionCache.length == 0) {
-		Parse.Cloud.run('fetchQuestionSet', {}, {
+		Parse.Cloud.run('fetchQuestionSet', {localuserid: userId}, {
 		  success: function(resp) {
 			 if (resp) {
 				for (var i=0; i<resp.length; i++) {
@@ -37,8 +37,8 @@ function getAnswer(userId, objectId, callback) {
 	});
 }
 
-function updateUserActivity(userId, questionId, rightAnswer, callback) {
-	Parse.Cloud.run('updateUserActivity', {localuserid: userId, questionId: questionId, score: rightAnswer ? 1 : 0}, {
+function updateUserScore(userId, questionId, rightAnswer, callback) {
+	Parse.Cloud.run('updateUserScore', {localuserid: userId, questionId: questionId, score: rightAnswer ? 1 : 0}, {
 	  success: function(resp) {
 	     //console.log(resp._serverData);
 	     callback && callback(resp._serverData);
@@ -87,7 +87,7 @@ $(document).ready(function(){
 			} else {
 				alert("Wrong !");
 			}
-			updateUserActivity(userId, questionId, ans == o.answer, function(o) {
+			updateUserScore(userId, questionId, ans == o.answer, function(o) {
 				nextQuestion();
 			});
 
