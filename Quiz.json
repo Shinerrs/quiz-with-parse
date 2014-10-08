@@ -1,0 +1,98 @@
+{ "results": [
+	{
+        "answer": "2",
+        "categoryId": "1",
+        "createdAt": "2014-09-25T14:49:25.038Z",
+        "objectId": "oQx24wiexI",
+        "option1": "0",
+        "option2": "1",
+        "option3": "2",
+        "option4": "3",
+        "title": "How many times has France won the Football World Cup",
+        "updatedAt": "2014-09-30T16:08:48.983Z"
+    },
+	{
+        "answer": "3",
+        "categoryId": "1",
+        "createdAt": "2014-09-25T14:49:25.044Z",
+        "objectId": "aT3xDlyBLA",
+        "option1": "1938",
+        "option2": "1939",
+        "option3": "1940",
+        "option4": "1941",
+        "title": "In which year did Winston Churchill become the Prime Minister for the first time ?",
+        "updatedAt": "2014-09-30T20:01:44.339Z"
+    },
+	{
+        "answer": "4",
+        "categoryId": "1",
+        "createdAt": "2014-09-25T14:49:25.033Z",
+        "objectId": "Gh8J3hh1wH",
+        "option1": "Wyoming",
+        "option2": "Colorado",
+        "option3": "Nevada",
+        "option4": "New Mexico",
+        "title": "Which of the following US states has a total land area greater than Arizona ?",
+        "updatedAt": "2014-09-30T16:08:49.716Z"
+    },
+	{
+        "answer": "1",
+        "categoryId": "1",
+        "createdAt": "2014-09-25T14:49:25.027Z",
+        "objectId": "domczGkDqA",
+        "option1": "Costa Rica",
+        "option2": "Peru",
+        "option3": "Ecuador",
+        "option4": "Brazil",
+        "title": "Which country does not share a common boundary with Colombia ?",
+        "updatedAt": "2014-09-30T16:08:50.475Z"
+    },
+	{
+        "answer": "2",
+        "categoryId": "1",
+        "createdAt": "2014-09-25T14:49:25.023Z",
+        "objectId": "PkdL84kdWT",
+        "option1": "+6",
+        "option2": "+7",
+        "option3": "+8",
+        "option4": "+3",
+        "title": "What is the international calling code for Russia",
+        "updatedAt": "2014-09-30T16:08:51.069Z"
+    },
+	{
+        "answer": "1",
+        "categoryId": "1",
+        "createdAt": "2014-09-25T14:49:25.009Z",
+        "objectId": "lLzeeSLgPh",
+        "option1": "Ozone",
+        "option2": "Peroxide",
+        "option3": "Oxygen Trioxide",
+        "option4": "Oxyrich",
+        "title": "What is the more common name for triatomic oxygen?",
+        "updatedAt": "2014-09-30T16:08:51.799Z"
+    },
+	{
+        "answer": "4",
+        "categoryId": "1",
+        "createdAt": "2014-09-30T20:58:41.342Z",
+        "objectId": "luJO4UgJfK",
+        "option1": "A Small piece of bread",
+        "option2": "A Little bit of luck",
+        "option3": "A Tiny earth",
+        "option4": "A little bit of heart",
+        "title": "What does the popular chinese snack 'Dim Sum' mean when translated to English ?",
+        "updatedAt": "2014-09-30T21:02:23.914Z"
+    },
+	{
+        "answer": "3",
+        "categoryId": "1",
+        "createdAt": "2014-09-30T20:58:41.339Z",
+        "objectId": "hgwF4SiFUo",
+        "option1": "Jonell Elliott",
+        "option2": "Wonder Woman",
+        "option3": "Lara Croft",
+        "option4": "Yoheen Wamzi",
+        "title": "Which fearless woman was born in Wimbledon on Feb 14th 1968?",
+        "updatedAt": "2014-09-30T21:02:25.043Z"
+    }
+] }

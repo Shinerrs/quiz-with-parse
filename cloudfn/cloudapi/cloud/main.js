@@ -58,7 +58,7 @@ function updateUserActivity(userId, length, callback) {
 
 Parse.Cloud.define("fetchQuestionSet", function(request, response) {
 	getUserActivity(request.params.localuserid, function(skip) {
-		var quesQuery = new Parse.Query("IndiaQuiz");
+		var quesQuery = new Parse.Query("Quiz");
 		quesQuery.limit(10);
 		quesQuery.skip(skip);
 		quesQuery.find({
@@ -75,8 +75,8 @@ Parse.Cloud.define("fetchQuestionSet", function(request, response) {
 });
 
 Parse.Cloud.define("checkAnswer", function(request, response) {
-	var IndiaQuiz = Parse.Object.extend("IndiaQuiz");
-	var query = new Parse.Query(IndiaQuiz);
+	var Quiz = Parse.Object.extend("Quiz");
+	var query = new Parse.Query(Quiz);
 
 	query.equalTo("objectId", request.params.objectId);
 	query.first({
@@ -97,7 +97,7 @@ Parse.Cloud.define("updateUserScore", function(request, response) {
 		success: function(object) {
 			if (object) {
 				if (request.params.score == 1) {
-					object.set('right', object.get('right') + 1);	
+					object.set('right', object.get('right') + 1);
 				} else {
 					object.set('wrong', object.get('wrong') + 1);
 				}
@@ -105,29 +105,29 @@ Parse.Cloud.define("updateUserScore", function(request, response) {
 			} else {
 				var object = new UserActivity();
 				object.set('userId', request.params.localuserid);
-				object.set('lastRow', 1);	
+				object.set('lastRow', 1);
 				if (request.params.score == 1) {
-					object.set('right', 1);	
+					object.set('right', 1);
 				} else {
 					object.set('wrong', 1);
-				}							
+				}
 			}
 			object.save(null, {
 				success: function(o) {
-					response.success("success");		
+					response.success("success");
 				},
 				error: function(error) {
 					console.log("Error: " + error);
-					response.error(error.code);	
+					response.error(error.code);
 				}
 			});
-			
+
 		},
 		error: function(error) {
 			console.log("Error " + error);
 			response.error(error.code);
 		}
-	});		
+	});
 
 });
 
